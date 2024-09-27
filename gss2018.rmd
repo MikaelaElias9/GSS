@@ -41,15 +41,11 @@ thus is use cat~cat
 
 ## Results
 
-We reject the Null Hypothesis.
+
 <!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
 
 ### Descriptive Results
-We reject the null Hypothesis because...       
-The graphical descriptive results shows that individuals who own guns are more likely to favor capital punishment.      
-The numerical descriptive results show that 75.68% percent of individuals who own guns are more likely to favor capital punishment.      
-The inferential results x-squared gave us the resulting p-value of 0.02022, which is less than the acceptable p-value of 0.05.       
-The fishers test states that the odds of an individual owning a gun is 2.271% more likely to favor capital punishment. 
+
 
 #### Graphical Descriptive Results
 
@@ -101,7 +97,14 @@ Is there a difference in years of education (EDUC) between the those who did or 
 ## Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
-numerical~categorical 
+Question is there a difference in years of education depending on those who did or didn't vote in 2012?                                     
+
+$H_0$ difference in years of education and those who voted in 2012 are not related      
+$H_A$ the difference in years of education and those who voted in 2012 are related 
+                      
+                      
+EDUC ~ VOTE12 are numerical~categorical        
+
 ##Results
 
 <!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
@@ -112,22 +115,44 @@ numerical~categorical
 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
+```{r}
+plot(EDUC~VOTE12,data=GSSdata)
+```
+This box plot shows that people who voted in 2012 had more years of education than those who did not vote.
+          
 #### Numerical Descriptive Results
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+```{r}
+favstats(EDUC~VOTE12,data=GSSdata)
+```
+The numerical summary shows that people who voted in 2012 have 2.3 more years of education than those who did not vote.
+
 
 ### Inferential Results
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+```{r}
+t.test(EDUC~VOTE12,data=GSSdata)
+```
+The inferential results state that people who voted in 2012 have 2.3 more years in of education than those who did not vote. the sample t test also gave us a p value of 1.24 which is higher than 0.05 so we will fail to reject the null hypothesis. 
+
 
 #  Question 3
 
 <!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?!-->
 
-Determine if a persons performance on the wordsum test (WORDSUM) is independent of their level of schooling (DEGREE).
-
-## Methods
-
+Determine if a persons performance on the wordsum test (WORDSUM) is independent of their level of schooling (DEGREE).      
+       
+      
+      
+## Methods     
+Question is the performance on the wordsum test related to the level of schooling      
+      
+$H_0$ Performance on the wordsum test and level of schooling are not related        
+$H_A$ performance of the wordsum test and level of schooling are related       
+ 
+WORDSUM ~ DEGREE are numerical ~ categorical       
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
 
 ##Results
@@ -138,18 +163,49 @@ Determine if a persons performance on the wordsum test (WORDSUM) is independent 
 
 #### Graphical Descriptive Results
 
+```{r}
+plot(WORDSUM~DEGREE,data=GSSdata)
+```
+The boxplot shows that individuals with higher levels of education and diplomas received higher scores on their wordsum test 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 #### Numerical Descriptive Results
-
+```{r}
+favstats(WORDSUM~DEGREE,data=GSSdata)
+```
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
-
+The numerical results shows that standard deviation of wordum scores for those with lower levels of education is 2.06. Those with higher levels of education have a standard deviation of 1.17. This shows that higher levels of education can be associated with higher levels of wordsum test results. 
 ### Inferential Results
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
-
-
+```{r}
+model1 <- aov(WORDSUM~DEGREE,data=GSSdata)
+summary.aov(model1)
+```
+The p-value was 0.000000025 which is less than 0.5 so this means we reject the null hypothesis.
+at least 2 different degree levels result in different wordsum scores
+```{r}
+plot(TukeyHSD(model1))
+```
+The post-HOC test shows that there is a significant difference in between graduate-bachelor and high school. This means that the mean in between the degree levels of graduate and bachelor are significantly lower than that of high school and less than high school.
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
 
+Question 1.        
+We reject the null Hypothesis because...       
+The graphical descriptive results shows that individuals who own guns are more likely to favor capital punishment.      
+The numerical descriptive results show that 75.68% percent of individuals who own guns are more likely to favor capital punishment.      
+The inferential results x-squared gave us the resulting p-value of 0.02022, which is less than the acceptable p-value of 0.05.       
+The fishers test states that the odds of an individual owning a gun is 2.271% more likely to favor capital punishment.         
+Question 2.       
+We reject the null hypothesis because...      
+The graphical descriptive results shows that individuals who voted in 2012 have more years od education than those who did not vote      
+The numerical descriptive results shows that people who voted in 2012 have 2.3 more years of education than those who did not vote      
+The inferential results of the t-test states that there is a 5.6683 difference in years of education between those who did and did not vote. We also received a p-value of 0.0000001248 which is less than than the acceptable p-value of 0.5      
+Question 3.             
+We reject the null hypothesis because...      
+The graphical descriptive results show that individuals with higher levels of education and diplomas received higher scores on their wordsum test      
+The numerical results shows that standard deviation of wordum scores for those with lower levels of education is 2.06. Those with higher levels of education have a standard deviation of 1.17. This shows that higher levels of education can be associated with higher levels of wordsum test results.        
+The inferential results show that the p-value was 0.000000025 which is less than 0.5 so this means we reject the null hypothesis.        
+at least 2 different degree levels result in different wordsum scores.The post-HOC test shows that there is a significant difference in between graduate-bachelor and high school. This means that the mean in between the degree levels of graduate and bachelor are significantly lower than that of high school and less than high school.    
